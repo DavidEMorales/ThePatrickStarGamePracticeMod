@@ -1,25 +1,34 @@
+using System;
 using HarmonyLib;
+using MelonLoader;
+using UnityEngine;
 
-namespace ThePatrickStarGamePracticeMod;
-
-[HarmonyPatch(typeof(SaveFile_Game), "ApplyToGame", [])]
-static class LoadGamePatch
+[assembly: MelonInfo(typeof(ThePatrickStarGamePracticeMod.LoadGamePatch), "LoadGamePatch", "1.0.0", "Sleepyhead08", null)]
+[assembly: MelonGame("PHL", "Patrick")]
+namespace ThePatrickStarGamePracticeMod 
 {
-    private static void Prefix() { }
-
-    private static void Postfix()
+    [HarmonyPatch(typeof(SaveFile_Game), "ApplyToGame", new Type[] { })]
+    static class LoadGamePatch
     {
-        foreach (string text in SavingManager.instance.gameFile.cvBools.Keys)
+        private static void Prefix() { }
+
+        private static void Postfix()
         {
-            if (text.Contains("FlyoverSeen"))
+            // Reset all FlyoverSeen bools to unsee all cutscenes.
+            foreach (string text in SavingManager.instance.gameFile.cvBools.Keys)
             {
-                CustomValue_SO objectByID2 = Database<CustomValueDatabase, CustomValue_SO>.instance.GetObjectByID(text);
-                if (objectByID2 != null)
+                if (text.Contains("FlyoverSeen"))
                 {
-                    CustomValues.bools[objectByID2] = false;
+                    CustomValue_SO objectByID2 = Database<CustomValueDatabase, CustomValue_SO>.instance.GetObjectByID(text);
+                    if (objectByID2 != null)
+                    {
+                        CustomValues.bools[objectByID2] = false;
+                    }
                 }
             }
+
+            // Apply values.
+            CustomValues.AllValuesUpdated();
         }
-        CustomValues.AllValuesUpdated();
-    }
+    } 
 }

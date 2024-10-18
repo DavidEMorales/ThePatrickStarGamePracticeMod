@@ -2,13 +2,13 @@
 
 [assembly: MelonInfo(typeof(ThePatrickStarGamePracticeMod.Core), "ThePatrickStarGamePracticeMod", "1.0.0", "Sleepyhead08", null)]
 [assembly: MelonGame("PHL", "Patrick")]
-
-namespace ThePatrickStarGamePracticeMod;
-
-public class Core : MelonMod
+namespace ThePatrickStarGamePracticeMod
 {
-    public override void OnInitializeMelon()
+    public class Core : MelonMod
     {
-        LoggerInstance.Msg("Initialized.");
+        public override void OnInitializeMelon()
+        {
+            LoggerInstance.Msg("Initialized.");
+        }
     }
 }
