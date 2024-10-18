@@ -1,0 +1,12 @@
+# IDE options/cache directories
+.vs/
+.vscode/
+.fleet/
+.idea/
+
+# Build results
+bin/
+obj/
+
+# User-specific files
+*.user
