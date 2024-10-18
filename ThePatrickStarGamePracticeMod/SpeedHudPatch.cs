@@ -10,21 +10,9 @@ namespace ThePatrickStarGamePracticeMod
     [HarmonyPatch(typeof(UI_SandDollars), "Update", new Type[] { })]
     static class SpeedHudPatch
     {
-        static Actor_PlayerCC playerCC;
-
-        private static void Prefix()
-        {
-            
-        }
-
         private static void Postfix(ref LocalizedTextMeshPro ____sandDollarsText)
         {
-            if (playerCC == null) 
-            { 
-                playerCC = GameObject.FindObjectOfType<Actor_PlayerCC>();
-            }
-
-            ____sandDollarsText.SetTextDirectly(____sandDollarsText.textMeshPro.text + "\n" + (int)(playerCC.velocity.magnitude*100));
+            ____sandDollarsText.SetTextDirectly(____sandDollarsText.textMeshPro.text + "\n" + (int)(Core.PlayerCC.velocity.magnitude*100));
         }
     }
 }
